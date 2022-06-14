@@ -25,6 +25,7 @@ class RegisterViewController: UIViewController {
         if emailTextField.text == ""{
             let alert = UIAlertController(title: "Error", message: "Please enter your email and password", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alert.addAction(action)
             present(alert, animated: true,completion: nil)
             
         }else{

@@ -102,6 +102,10 @@
 		EB9E3ADE2846016300734F37 = {
 			isa = PBXGroup;
 			children = (
+				EBF8DF692858629B0086E142 /* JSONDATA */,
+				EBF8DF66285861A50086E142 /* MeunDrinkController */,
+				EBF8DF682858625A0086E142 /* DrinkController */,
+				EBF8DF672858621F0086E142 /* TableViewCell */,
 				EB9E3AE92846016300734F37 /* StuckDrinkiApp */,
 				EB9E3AE82846016300734F37 /* Products */,
 			);
@@ -118,33 +122,61 @@
 		EB9E3AE92846016300734F37 /* StuckDrinkiApp */ = {
 			isa = PBXGroup;
 			children = (
-				EB9E3AEA2846016300734F37 /* AppDelegate.swift */,
-				EB9E3AEC2846016300734F37 /* SceneDelegate.swift */,
-				EB9E3B00284739DB00734F37 /* MenuTableViewCell.swift */,
-				EB9E3B0428485E2200734F37 /* OrderDrinkTableViewCell.swift */,
-				EB9E3B0628485E8D00734F37 /* OrdererTableViewCell.swift */,
-				EB9E3B0C2848B58100734F37 /* OrderListTableViewCell.swift */,
-				EB9E3AF02846016300734F37 /* Main.storyboard */,
-				EB27CC17285741CC008F89E9 /* DrinkTypeViewController.swift */,
 				EB27CBF428573060008F89E9 /* LoginViewController.swift */,
 				EB27CBF62857308D008F89E9 /* RegisterViewController.swift */,
 				EB27CBF8285730B1008F89E9 /* ResetViewController.swift */,
-				EB9E3B0828486A3700734F37 /* DrinkSection.swift */,
-				EB9E3B0228473A0A00734F37 /* Menu.swift */,
-				EB9E3B0A28487F7E00734F37 /* Order.swift */,
+				EB9E3AEA2846016300734F37 /* AppDelegate.swift */,
+				EB9E3AEC2846016300734F37 /* SceneDelegate.swift */,
+				EB9E3AF02846016300734F37 /* Main.storyboard */,
 				EB9E3AF32846016600734F37 /* Assets.xcassets */,
 				EB9E3AF52846016600734F37 /* LaunchScreen.storyboard */,
 				EB9E3AF82846016600734F37 /* Info.plist */,
-				EB9E3AFE284735F300734F37 /* MenuTableViewController.swift */,
-				EB9E3AEE2846016300734F37 /* OrderDrinkViewController.swift */,
-				EB9E3B10284DEDA400734F37 /* OrderListTableViewController.swift */,
-				EB27CBC4284F52EF008F89E9 /* Menu2TableViewCell.swift */,
-				EB27CBC82851D98E008F89E9 /* Menu3TableViewController.swift */,
-				EB27CBCA2851D9A1008F89E9 /* Menu3TableViewCell.swift */,
-				EB27CBC6284F530C008F89E9 /* Menu2TableViewController.swift */,
 				EB27CBFA285733C1008F89E9 /* GoogleService-Info.plist */,
 			);
 			path = StuckDrinkiApp;
+			sourceTree = "<group>";
+		};
+		EBF8DF66285861A50086E142 /* MeunDrinkController */ = {
+			isa = PBXGroup;
+			children = (
+				EB9E3AFE284735F300734F37 /* MenuTableViewController.swift */,
+				EB27CBC6284F530C008F89E9 /* Menu2TableViewController.swift */,
+				EB27CBC82851D98E008F89E9 /* Menu3TableViewController.swift */,
+			);
+			path = MeunDrinkController;
+			sourceTree = "<group>";
+		};
+		EBF8DF672858621F0086E142 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				EB9E3B00284739DB00734F37 /* MenuTableViewCell.swift */,
+				EB27CBC4284F52EF008F89E9 /* Menu2TableViewCell.swift */,
+				EB27CBCA2851D9A1008F89E9 /* Menu3TableViewCell.swift */,
+				EB9E3B0428485E2200734F37 /* OrderDrinkTableViewCell.swift */,
+				EB9E3B0628485E8D00734F37 /* OrdererTableViewCell.swift */,
+				EB9E3B0C2848B58100734F37 /* OrderListTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		EBF8DF682858625A0086E142 /* DrinkController */ = {
+			isa = PBXGroup;
+			children = (
+				EB9E3B10284DEDA400734F37 /* OrderListTableViewController.swift */,
+				EB27CC17285741CC008F89E9 /* DrinkTypeViewController.swift */,
+				EB9E3AEE2846016300734F37 /* OrderDrinkViewController.swift */,
+			);
+			path = DrinkController;
+			sourceTree = "<group>";
+		};
+		EBF8DF692858629B0086E142 /* JSONDATA */ = {
+			isa = PBXGroup;
+			children = (
+				EB9E3B0828486A3700734F37 /* DrinkSection.swift */,
+				EB9E3B0228473A0A00734F37 /* Menu.swift */,
+				EB9E3B0A28487F7E00734F37 /* Order.swift */,
+			);
+			path = JSONDATA;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
