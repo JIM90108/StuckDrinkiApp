@@ -14,56 +14,24 @@ class OrderListTableViewController: UITableViewController {
     
     @IBOutlet weak var totalPriceLabel: UILabel!
     
+    //設定API
     let apiKey = "keyjel3tOKtSJGpyt"
     let urlStr = "https://api.airtable.com/v0/app2nxltVKfAsfrE5/OrderData"
     
-    
+    //設定資料
     var orderDrinkData = [DrinkOrder]()
-    
     var orderListData : OrderRecords?
     
-    
-    //
-    var mediumPrice = 0
-    var largePrice = 0
-    var menuData: Array<Record> = []
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchData(urlStr: urlStr)
-        refreshControl = UIRefreshControl()
-        tableView.refreshControl = refreshControl
-//        refreshControl = UIRefreshControl()
-//        tableView.refreshControl = refreshControl
-        updateUI()
-
 
     }
     
-    func updateUI() {
-        print("updateUI")
-
-        
-        fetchData(urlStr: urlStr)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            self.tableView.refreshControl?.endRefreshing()
-        }
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
+    //更新資料
     override func viewWillAppear(_ animated: Bool) {
+        fetchData(urlStr:urlStr)
     
-
-        
     }
     
 
@@ -79,7 +47,7 @@ class OrderListTableViewController: UITableViewController {
         return orderDrinkData.count
     }
     
-    
+    //設定tableView裡的內容
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OrderListTableViewCell",for: indexPath) as! OrderListTableViewCell
         
@@ -94,9 +62,7 @@ class OrderListTableViewController: UITableViewController {
         let quantity = orderData.quantity
         let totalDrinkPrice = orderData.price
 
-        
-        
-        //顯示
+        //顯示資訊
         cell.ordererLabel.text = orderName
         cell.drinkNameLabel.text = drinkName
         cell.sizeLabel.text = drinkSize
@@ -112,13 +78,20 @@ class OrderListTableViewController: UITableViewController {
             totalPrice += i.fields.price
             
             totalPriceLabel.text = totalPrice.description
+            if totalPrice == 0{
+                totalPriceLabel.text = "0"
+            }
         }
         //清單內所有飲料總數
         var totalQuantity = 0
         for i in orderDrinkData{
             totalQuantity += i.fields.quantity
             totalDrinkLabel.text = totalQuantity.description
+            if totalQuantity == 0{
+                totalDrinkLabel.text = "0"
+            }
         }
+        
         //顯示飲料圖片
         if let imageUrl = URL(string: orderData.drinkImage) {
             URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
@@ -137,6 +110,7 @@ class OrderListTableViewController: UITableViewController {
         let orderData = orderDrinkData[indexPath.row].fields
         let orderName = orderData.ordererName
         let drinkName = orderData.drinkName
+        //加入刪除選項
         if editingStyle == .delete{
             let controller = UIAlertController(title: "\(orderName)的" + "\(drinkName)", message: "確定刪除此筆訂單？", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "確認", style: .default) { (_) in
@@ -144,6 +118,7 @@ class OrderListTableViewController: UITableViewController {
                 self.deletefetchData(urlStr: self.urlStr, id: drinkID){
                     print("remove arr Data")
                     self.orderDrinkData.remove(at: indexPath.row)
+                    // 刪除後更新
                     DispatchQueue.main.async {
                         //清單內飲料全部價格
                         var totalPrice = 0
@@ -159,6 +134,12 @@ class OrderListTableViewController: UITableViewController {
                             self.totalDrinkLabel.text = totalQuantity.description
                     
                         }
+                        if totalQuantity == 0 {
+                            self.totalPriceLabel.text = "0"
+                        }
+                        if totalPrice == 0 {
+                            self.totalDrinkLabel.text = "0"
+                        }   
                         tableView.deleteRows(at: [indexPath], with: .fade)
                         self.fetchData(urlStr: self.urlStr)
                     }
@@ -200,7 +181,7 @@ class OrderListTableViewController: UITableViewController {
         }.resume()
     }
     
-    
+    //刪除資料
     func deletefetchData(urlStr: String, id: String,completionHandler: @escaping () -> Void){
         
         
@@ -228,7 +209,7 @@ class OrderListTableViewController: UITableViewController {
         
     }
 
-    
+    //傳資料
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let row = tableView.indexPathForSelectedRow?.row,
            let controller = segue.destination as? OrderDrinkViewController{

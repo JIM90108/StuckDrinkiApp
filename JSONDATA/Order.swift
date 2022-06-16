@@ -10,11 +10,9 @@ import Foundation
 struct OrderRecords: Codable {
     var records: [DrinkOrder]
 }
-
 struct PostDrinkOrder: Codable {
     var fields: OrderData
 }
-
 
 struct OrderData: Codable {
     var ordererName: String
@@ -33,7 +31,7 @@ struct DrinkOrder: Codable {
     var fields: OrderData
     var createdTime: String
 }
-
+//刪除
 struct DeleteData: Codable {
     var deleted: Bool
 }

@@ -25,39 +25,39 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var customSelectionTableView: UITableView!
     
     @IBOutlet weak var addToOrderListButton: UIButton!
+    //串接API的網址
     let urlStr = "https://api.airtable.com/v0/app2nxltVKfAsfrE5/OrderData"
+    //API Key
     let apiKey = "keyjel3tOKtSJGpyt"
-    
-    let urlStr2 = "https://api.airtable.com/v0/app2nxltVKfAsfrE5/Menu?sort[][field]=sort"
-    
+
+    //代理(修改頁面跟訂購頁面共用)
     var delegate: OrderListTableViewController?
+    
+    //接收MenuTableViewController傳來的資料
     //接收資料addToOrderListButton
     var drinkName:String!
     var drinkDescribe:String!
     var drinkImageURL: String!
+    var updateOrderData = false
+    var orderDataID:String!
     
-    
+    //接收MenuTableViewController傳來的資料
     var mediumPrice: Int!
     var largePrice : Int!
     
+    //另外儲存的參數
     var orderPrice:Int!
     var drinkPrice = 0
     var feedPrice = 0
     var drinkQuantity = 0
     var ordererName:String!
-    
     var sugar: String!
     var temp: String!
     var feed = ["",""]
     var size: String!
     
-    var updateOrderData = false
-    var orderDataID:String!
     
-    
-    
-    
-    
+    //設定選擇飲料的Array並以Boolean判斷
     var sizeChecked = Array(repeating: false, count: Size.allCases.count)
     var tempChecked = Array(repeating: false, count: Temp.allCases.count)
     var sugarChecked = Array(repeating: false, count: Sugar.allCases.count)
@@ -65,6 +65,7 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //顯示飲料資訊
         showDrinkMessage()
         print(mediumPrice ?? "")
         print(largePrice ?? "")
@@ -76,20 +77,22 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
             addToOrderListButton.setTitle("加入訂單", for: .normal)
             drinkPrice = mediumPrice
         }
+        //顯示飲料資訊
         showOrderPrice()
         
+        //取得飲料價錢
         getAllDrinkPrice()
-        
         
 }
     
 
     
-    
+    //DrinkSection裡OrderInfo設置所設置的
     func numberOfSections(in tableView: UITableView) -> Int {
         OrderInfo.allCases.count
     }
     
+    //設定飲料選擇的標題
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let orderInfoType = OrderInfo.allCases[section]
         switch orderInfoType {
@@ -105,6 +108,8 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
             return ""
         }
     }
+    
+    //選擇飲料內容的設定
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let orderInfoType = OrderInfo.allCases[section]
         switch orderInfoType {
@@ -113,18 +118,21 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
         case .size :
             return Size.allCases.count
         case .sugar :
+            //這些飲料沒有無糖
             guard drinkName == "咖啡星冰樂" || drinkName == "焦糖星冰樂" || drinkName == "焦糖可可碎片星冰樂" || drinkName == "摩卡可可碎片星冰樂" || drinkName == "芝麻杏仁豆腐星冰樂" || drinkName == "夏日海灘芒果風味星冰樂" || drinkName == "粉紅夢幻星冰樂" || drinkName == "香草風味星冰樂" || drinkName ==  "巧克力可可碎片星冰樂" || drinkName == "抹茶奶霜星冰樂" || drinkName == "雙果果汁星冰樂"
             else {return Sugar.allCases.count}
             return 6
         case .temp :
+            //這些飲料沒有去冰
             guard drinkName == "咖啡星冰樂" || drinkName == "焦糖星冰樂" || drinkName == "焦糖可可碎片星冰樂" || drinkName == "摩卡可可碎片星冰樂" || drinkName == "芝麻杏仁豆腐星冰樂" || drinkName == "夏日海灘芒果風味星冰樂" || drinkName == "粉紅夢幻星冰樂" || drinkName == "香草風味星冰樂" || drinkName ==  "巧克力可可碎片星冰樂" || drinkName == "抹茶奶霜星冰樂" || drinkName == "雙果果汁星冰樂"
             else {return Temp.allCases.count}
-            return 4
+            return 3
         case .feed :
             return Feed.allCases.count
         }
     }
     
+    //設定tableView裡cell的內容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let orderInfoType = OrderInfo.allCases[indexPath.section]
         
@@ -133,7 +141,6 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
             let cell = customSelectionTableView.dequeueReusableCell(withIdentifier: "OrdererTableViewCell") as! OrdererTableViewCell
             cell.ordererLabel.text = "訂購人"
             cell.ordererTextField.placeholder = "請輸入名字"
-//            cell.ordererTextField.text = ordererName
             cell.ordererTextField.delegate = self
             cell.ordererTextField.text = ordererName
             guard let ordererName = ordererName else { return cell }
@@ -145,7 +152,7 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.feedAddPriceLabel.isHidden = true
             cell.drinkMessageLabel.text = Size.allCases[indexPath.row].rawValue
             
-
+            //設定選擇按鈕
             if sizeChecked[indexPath.row] {
                 cell.optionBtnImageView.image = UIImage(named: "radio_on")
             } else {
@@ -203,13 +210,14 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-    
+    //cell點擊事件
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let orderInfoType = OrderInfo.allCases[indexPath.section]
         switch orderInfoType {
         case .orderer :
             return
         case .size:
+            //設定為false，每次點選都只能選一個
             sizeChecked = Array(repeating: false, count: Size.allCases.count)
             sizeChecked[indexPath.row] = !sizeChecked[indexPath.row]
             size = Size.allCases[indexPath.row].rawValue
@@ -229,12 +237,16 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
             sugarChecked[indexPath.row] = !sugarChecked[indexPath.row]
             sugar = Sugar.allCases[indexPath.row].rawValue
         case .temp:
+            print(!tempChecked[indexPath.row])
             tempChecked = Array(repeating: false, count: Temp.allCases.count)
             tempChecked[indexPath.row] = !tempChecked[indexPath.row]
             temp = Temp.allCases[indexPath.row].rawValue
         case .feed:
+            //不強制設定為false還是true，因為可以多選
             feedChecked[indexPath.row] = !feedChecked[indexPath.row]
+            //可以印出來看
             print(feedChecked[indexPath.row])
+            //如果是ture則要加價錢
             if feedChecked[indexPath.row] {
                 feedPrice += FeedPrice.allCases[indexPath.row].rawValue
                 feed[indexPath.row] = Feed.allCases[indexPath.row].rawValue
@@ -247,6 +259,7 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.reloadData()
     }
     
+    //顯示價格
     func showOrderPrice() {
         print("show Order Price")
         orderPrice = (drinkPrice + feedPrice) * drinkQuantity
@@ -258,19 +271,19 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     
-    
+    //設定飲料減少數量
     @IBAction func reduceCountAction(_ sender: Any) {
         if drinkQuantity > 1 {
             drinkQuantity -= 1
         } else {
-            drinkQuantity = 1
+            drinkQuantity = 0
         }
         drinkQuantityLabel.text = drinkQuantity.description
         showOrderPrice()
     }
     
     
-    
+    //設定飲料增加數量
     @IBAction func addCountAction(_ sender: Any) {
         
         drinkQuantity += 1
@@ -279,14 +292,13 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-    
+    // 設置將飲料上傳至Airtable裡的OrderData
     func updateData(){
-        
         let orderData = OrderData(ordererName: ordererName , drinkName: drinkName, temp: temp, sugar: sugar, size: size, feed: feedToString(), quantity: drinkQuantity, drinkImage: drinkImageURL,price: orderPrice)
-        
         let drinkOrderData = PostDrinkOrder(fields: orderData)
         // set request method ＆ content type
         let url: URL?
+        //如果updateOrderData是false則修改否則上傳
         if updateOrderData {
             guard let id = orderDataID else { return }
             let updateURL = urlStr + "/\(id)"
@@ -294,18 +306,15 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
         } else {
             url = URL(string: urlStr)!
         }
-        
         var urlRequest = URLRequest(url: url!)
         if updateOrderData {
             urlRequest.httpMethod = "PUT"
         } else {
             urlRequest.httpMethod = "POST"
         }
-        
         // set HTTPHeaderField
         urlRequest.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
         // 搭配jsonEncoder將自訂型別變成JSON格式的Data
         let jsonEncoder = JSONEncoder()
         print("bulid jsonEncoder")
@@ -319,12 +328,9 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
                     print("success")
                 } else {
                     print(err)
-                    
                 }
             }.resume()
         }
-        
-        
     }
     
     
@@ -343,7 +349,7 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     @IBAction func addOrderDrinkBtn(_ sender: Any) {
-        
+        //判斷button為加入訂單或是修改訂單
         var addToOrderListtButtonTitle: String!
         if addToOrderListButton.titleLabel?.text == "加入訂單" {
             addToOrderListtButtonTitle = "加入訂單"
@@ -352,24 +358,35 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         let controller = UIAlertController(title: addToOrderListtButtonTitle, message: "", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "確定", style: .default){ (_) in
+        //按下確認後透過handler顯示alert並將資料上傳至Aittable
+        let action = UIAlertAction(title: "確定", style: .default,handler: {action in
             // 檢查選項
             guard self.checkOption() else { return }
             // 將訂單上傳至Database
             self.updateData()
-            self.delegate?.updateUI()
-        }
+            //判斷button為修改訂單時alert顯示為修改完成並跳回主頁面
+            if self.addToOrderListButton.titleLabel?.text == "修改訂單"{
+                addToOrderListtButtonTitle = "修改完成"
+            }
+                let controller = UIAlertController(title: addToOrderListtButtonTitle, message: "", preferredStyle: .alert)
+            //按下確認後透過handler執行
+            let action = UIAlertAction(title: "確認", style: .default,handler: {action in
+                
+                //跳回主頁面
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "Menu")
+                self.present(vc!, animated: true,completion: nil)
+            })
+            controller.addAction(action)
+            self.present(controller, animated: true,completion: nil)
+        })
         let cancel = UIAlertAction(title: "取消", style: .cancel,handler: nil)
-        
         controller.addAction(action)
         controller.addAction(cancel)
         present(controller, animated: true, completion: nil)
-       
-       
         
     }
     
-    
+    //判斷飲料資訊是否都有選擇
     func checkOption() -> Bool {
         print(sizeChecked,sugarChecked,tempChecked,ordererName)
         var check = false
@@ -395,7 +412,7 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-    
+    //轉型
     func feedToString() -> String {
         var feedStr = ""
         for feed in feed {
@@ -407,8 +424,7 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     
-    
-    
+    //顯示飲料資訊
     func showDrinkMessage(){
         drinkNameLabel.text = drinkName
         describeLabel.text = drinkDescribe
@@ -420,13 +436,11 @@ class OrderDrinkViewController: UIViewController, UITableViewDelegate, UITableVi
                     }
                 }
             }.resume()
-            
-            
-            
         }
         
     }
     
+    //獲取飲料價格資訊
     func getAllDrinkPrice(){
         var drinkName = drinkNameLabel.text
         

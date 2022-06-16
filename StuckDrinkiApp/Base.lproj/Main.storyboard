@@ -63,7 +63,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yPl-sI-JkV">
-                                <rect key="frame" x="167" y="814" width="81" height="48"/>
+                                <rect key="frame" x="65" y="814" width="81" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="登出">
@@ -74,6 +74,17 @@
                                     <segue destination="Cuq-31-746" kind="show" id="6qb-SV-wSE"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpG-CB-e25">
+                                <rect key="frame" x="201" y="814" width="175" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="cart.fill" catalog="system" title="購物車">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="28"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="k2x-Ik-97N" kind="show" id="NFh-T9-U2T"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="67a-F9-Cvh"/>
                         <color key="backgroundColor" red="0.14140116066573094" green="0.51389336340206193" blue="0.043085604409941622" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -82,7 +93,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cqb-VP-Yyt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1692.753623188406" y="63.616071428571423"/>
+            <point key="canvasLocation" x="1453.6231884057972" y="109.82142857142857"/>
         </scene>
         <!--Menu Table View Controller-->
         <scene sceneID="9T6-GR-rvW">
@@ -167,7 +178,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5W4-h5-WuG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2542.0289855072465" y="82.366071428571431"/>
+            <point key="canvasLocation" x="3651" y="110"/>
         </scene>
         <!--Order Drink View Controller-->
         <scene sceneID="jfV-zE-aaO">
@@ -352,12 +363,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5oE-jV-MPK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2418.840579710145" y="814.95535714285711"/>
+            <point key="canvasLocation" x="1525" y="799"/>
         </scene>
         <!--Order List Table View Controller-->
         <scene sceneID="ehU-ql-Vwp">
             <objects>
-                <tableViewController modalPresentationStyle="fullScreen" id="k2x-Ik-97N" customClass="OrderListTableViewController" customModule="StuckDrinkiApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="drinkList" modalPresentationStyle="fullScreen" id="k2x-Ik-97N" customClass="OrderListTableViewController" customModule="StuckDrinkiApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="190" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="ghW-nc-ezI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -517,7 +528,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bet-5q-mkg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2419" y="1561"/>
+            <point key="canvasLocation" x="2919" y="840"/>
         </scene>
         <!--Menu3 Table View Controller-->
         <scene sceneID="SKg-O4-y5i">
@@ -603,7 +614,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GA0-yX-dyW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1024.6376811594205" y="1493.9732142857142"/>
+            <point key="canvasLocation" x="2919" y="110"/>
         </scene>
         <!--Menu2 Table View Controller-->
         <scene sceneID="UJT-wE-LgQ">
@@ -689,7 +700,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YE8-g0-5aX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1024.6376811594205" y="793.52678571428567"/>
+            <point key="canvasLocation" x="2167" y="110"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="1Bb-cp-fLb">
@@ -776,7 +787,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y6c-Oj-ehO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-310.14492753623193" y="63.616071428571423"/>
+            <point key="canvasLocation" x="-1341" y="110"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="nnr-0s-COe">
@@ -850,7 +861,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6aF-Fo-4TX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="366.66666666666669" y="63.616071428571423"/>
+            <point key="canvasLocation" x="84" y="110"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4R8-Ze-ngU">
@@ -868,7 +879,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NWq-T5-5FW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1025" y="64"/>
+            <point key="canvasLocation" x="775" y="110"/>
         </scene>
         <!--Reset View Controller-->
         <scene sceneID="rEc-oU-7Qm">
@@ -928,13 +939,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UdQ-nN-rDg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-310.14492753623193" y="814.95535714285711"/>
+            <point key="canvasLocation" x="-620" y="110"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gzt-8y-mHf"/>
+        <segue reference="6qb-SV-wSE"/>
         <segue reference="s3c-Fg-7Cs"/>
-        <segue reference="rE4-ja-axg"/>
+        <segue reference="ca0-aQ-aR8"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="20200510002252" width="1024" height="768"/>

@@ -17,6 +17,7 @@ class DrinkTypeViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    //登出
     @IBAction func logoutAction(_ sender: Any) {
         if Auth.auth().currentUser != nil {
             do {

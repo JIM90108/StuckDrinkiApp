@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Foundation
 
 enum OrderInfo :CaseIterable {
 case orderer
